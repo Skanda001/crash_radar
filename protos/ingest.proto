@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package ingest;
+
+// ================================================================
+//  CrashRadar: gRPC Contract (ingest.proto)
+//
+//  This file defines the "language" between:
+//  - Any client app that wants to report a crash
+//  - Our Ingest Service that receives it
+//
+//  Protocol Buffers are used instead of REST because:
+//  - They are 5-10x faster (binary format, not JSON text)
+//  - They enforce strict types (no missing fields)
+//  - Perfect for high-frequency error reporting under load
+// ================================================================
+
+service IngestService {
+  // The only method we need:
+  // Report a crash and get an immediate acknowledgement
+  rpc ReportCrash (CrashReport) returns (CrashAck);
+}
+
+// What the client sends
+message CrashReport {
+  string api_key     = 1;  // Identifies which project this crash belongs to
+  string error_type  = 2;  // e.g. "TypeError", "UnhandledPromiseRejection"
+  string message     = 3;  // e.g. "Cannot read property 'id' of undefined"
+  string stack_trace = 4;  // The full multi-line stack trace
+  string service     = 5;  // Which microservice crashed (e.g. "checkout-service")
+}
+
+// What we send back (instantly, before Kafka even processes it)
+message CrashAck {
+  bool   success    = 1;  // Always true if we saved it to DB
+  string message    = 2;  // e.g. "Crash received. Incident created."
+  string event_id   = 3;  // The outbox event ID for tracing
+}

@@ -1,0 +1,25 @@
+{
+  "name": "ingest-service",
+  "version": "1.0.0",
+  "description": "CrashRadar gRPC Ingest Service — receives crash reports and saves to PostgreSQL with Outbox",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "proto:gen": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./src/generated --grpc_out=grpc_js:./src/generated --proto_path=../../protos ../../protos/ingest.proto"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.9",
+    "@grpc/proto-loader": "^0.7.13",
+    "kafkajs": "^2.2.4",
+    "pg": "^8.11.5",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/pg": "^8.11.6",
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.5.0"
+  }
+}

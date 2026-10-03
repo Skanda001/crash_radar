@@ -1,0 +1,20 @@
+{
+  "name": "aggregator-worker",
+  "version": "1.0.0",
+  "description": "CrashRadar Aggregator Worker — consumes from Kafka, deduplicates crash reports, groups into incidents",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/pg": "^8.11.6",
+    "typescript": "^5.5.0"
+  }
+}

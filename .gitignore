@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+dist/
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Docker volumes
+postgres_data/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript build info
+*.tsbuildinfo
