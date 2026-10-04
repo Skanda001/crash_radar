@@ -53,12 +53,12 @@ export async function saveCrashReport(data: {
     // Write the crash event to the Outbox table.
     // Our background publisher will pick this up and send to Kafka.
     await client.query(
-      `INSERT INTO outbox (id, event_type, payload, processed)
-       VALUES ($1, $2, $3, FALSE)`,
+      `INSERT INTO outbox (event_type, payload, processed)
+       VALUES ($1, $2, FALSE)`,
       [
-        eventId,
         "CRASH_REPORTED",
         JSON.stringify({
+          eventId,
           projectId: data.projectId,
           fingerprint,
           errorType: data.errorType,
